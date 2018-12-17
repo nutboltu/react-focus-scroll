@@ -1,0 +1,28 @@
+{
+  "name": "react-focus-scroll",
+  "version": "1.0.0",
+  "description": "A react component which focuses sections while scrolling",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nutboltu/react-focus-scroll.git"
+  },
+  "keywords": [
+    "focus-on-scroll"
+  ],
+  "author": "Farhad Yasir",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nutboltu/react-focus-scroll/issues"
+  },
+  "homepage": "https://github.com/nutboltu/react-focus-scroll#readme",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "typescript": "3.2.1"
+  }
+}
