@@ -4,13 +4,11 @@ export interface IFocusArea {
 }
 
 export interface IFocusOnScrollProps {
-  focusedClassName: string;
-  tag: any;
-  className: string;
-  disableScroll: boolean;
-  children: any;
-  focusOn: string;
-  sectionClassName: string;
+  focusedClassName?: string;
+  className?: string;
+  children?: any;
+  focusOn?: string;
+  sectionClassName?: string;
 }
 
 export interface IFocusOnScrollState {
