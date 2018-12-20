@@ -5,12 +5,12 @@ export const findFocusArea = () => {
     return { top: 0, bottom: 0 };
   }
 
-  const bottom = window.innerHeight * config.halfSize;
+  const bottom = window.innerHeight * 0.50;
   const minHeight = childrenArray.reduce((acc, cur) =>
     Math.min(cur.clientHeight, acc), bottom);
 
   return {
-    top: bottom - (minHeight * config.halfSize),
+    top: bottom - (minHeight * 0.50),
     bottom,
   };
 }

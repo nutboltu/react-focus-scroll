@@ -20,9 +20,17 @@
   },
   "homepage": "https://github.com/nutboltu/react-focus-scroll#readme",
   "dependencies": {
-
+    "classnames": "^2.2.6",
+    "lodash.debounce": "^4.0.8",
+    "lodash.throttle": "^4.1.1"
+  },
+  "peerDependencies": {
+    "react": "^16.7.0"
   },
   "devDependencies": {
-    "typescript": "3.2.1"
+    "@types/lodash.debounce": "^4.0.4",
+    "@types/lodash.throttle": "^4.1.4",
+    "@types/react": "^16.7.17",
+    "typescript": "^3.2.2"
   }
 }
