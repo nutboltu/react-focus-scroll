@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "module": "commonjs",
+    "jsx": "react",
+    "lib": ["es2016", "dom", "scripthost"],
+    "outDir": "dist",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules/**/*"]
+}
