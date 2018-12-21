@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
 import { throttle, debounce } from 'lodash';
-// import debounce from 'lodash.debounce';
 
 import {
   DELAY_TIME_IN_MS,
@@ -11,18 +10,12 @@ import {
   findFocusArea,
   findFocusElement
 } from './utils';
-// import * as styles from './FocusOnScroll.scss';
 
 import {
   IFocusOnScrollProps,
   IFocusOnScrollState
 } from './FocusOnScroll.d';
 
-// const section = styled`
-//   font-size: 1.5em;
-//   text-align: center;
-//   color: palevioletred;
-// `;
 const styles = {
   section: {
     opacity: 0.5,
