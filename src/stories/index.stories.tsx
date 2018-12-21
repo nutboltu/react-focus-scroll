@@ -10,16 +10,8 @@ const stories = storiesOf('FocusOnScroll', module);
 stories.addDecorator(withKnobs);
 
 stories.add('Default (with options)', withInfo()(() => {
-  // const defaultProps = {
-  //   focusOn: text('focusOn: ', '1'),
-  // };
-  // const divProps = {
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // };
   return (
     <FocusOnScroll
-      // {...defaultProps}
     >
       <div  style={{ height: 500, background: '#00E4E4' }}>
         <div  color="white">0</div>
@@ -97,34 +89,3 @@ stories.add('Small sized sections (with options)', () => {
   );
 });
 
-// stories.add('Disabled scroll', () => {
-//   const defaultProps = {
-//     disableScroll: true,
-//   };
-//   const divProps = {
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   };
-//   return (
-//     <FocusOnScroll
-//       {...defaultProps}
-//     >
-//       <div  style={{ height: 500, background: '#ED710B' }}>
-//         <div  color="white">1</div>
-//       </div>
-//       <div  style={{ height: 300, background: '#F9F3E9' }}>
-//         <div >2</div>
-//       </div>
-//       <div  style={{ height: 500, background: '#8DE2E0' }}>
-//         <div >3</div>
-//         <div
-//           name="testField"
-//           id="test2"
-//         />
-//       </div>
-//       <div  style={{ height: 300, background: '#A9A379' }}>
-//         <div >4</div>
-//       </div>
-//     </FocusOnScroll>
-//   );
-// });
