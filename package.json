@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "$(npm bin)/webpack --env production",
-    "start": "start-storybook -p 9001 -c .storybook",
+    "start": "start-storybook -p 8000 -c .storybook",
     "deploy-storybook": "storybook-to-ghpages"
   },
   "repository": {
