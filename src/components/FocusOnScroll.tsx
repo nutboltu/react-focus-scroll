@@ -142,7 +142,7 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
         <section
           key={id}
           className={classnames(styles.section, sectionClassName, {
-            // [styles.isFocused]: isFocused,
+            'focused': isFocused,
             [focusedClassName]: isFocused,
           })}
         >
