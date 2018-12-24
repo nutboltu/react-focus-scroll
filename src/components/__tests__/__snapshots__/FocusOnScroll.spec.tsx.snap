@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FocusOnScroll /> FocusOnScroll Component should render with defaults 1`] = `
+<div
+  className="display"
+  onClick={[Function]}
+  role="button"
+>
+  <section
+    className="opacity transition focused undefined"
+    key="s_0/.0"
+  >
+    <div>
+       This is a test
+    </div>
+  </section>
+  <section
+    className="opacity transition"
+    key="s_1/.1"
+  >
+    <div>
+       This is a test
+    </div>
+  </section>
+</div>
+`;
