@@ -1,6 +1,6 @@
-import { IFocusArea } from '../components/FocusOnScroll.d';
+import { IFocusArea, ChildrenArray } from '../@types';
 
-export const findFocusArea = (childrenArray: any[]) => {
+export const findFocusArea = (childrenArray: any[]): IFocusArea => {
   if (!childrenArray.length) {
     return { top: 0, bottom: 0 };
   }
@@ -15,10 +15,10 @@ export const findFocusArea = (childrenArray: any[]) => {
   };
 }
 
-export const findFocusElement = (focusArea: IFocusArea, childrenArray: any[]) => {
+export const findFocusElement = (focusArea: IFocusArea, childrenArray: ChildrenArray) => {
   const windowHeight = document.body.offsetHeight - window.innerHeight;
 
-  if (!childrenArray.length) return -1;
+  if (childrenArray.length === 0) return -1;
 
   if (window.scrollY === 0) return 0;
 

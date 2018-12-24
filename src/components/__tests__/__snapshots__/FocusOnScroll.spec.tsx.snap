@@ -2,21 +2,30 @@
 
 exports[`<FocusOnScroll /> FocusOnScroll Component should render with defaults 1`] = `
 <div
-  className="display"
   onClick={[Function]}
   role="button"
 >
   <section
-    className="opacity transition focused undefined"
-    key="s_0/.0"
+    key="focus-on-scroll-section-0/.0"
+    style={
+      Object {
+        "opacity": 1,
+        "transition": "opacity 0.1s ease-in-out",
+      }
+    }
   >
     <div>
        This is a test
     </div>
   </section>
   <section
-    className="opacity transition"
-    key="s_1/.1"
+    key="focus-on-scroll-section-1/.1"
+    style={
+      Object {
+        "opacity": 0.5,
+        "transition": "opacity 0.1s ease-in-out",
+      }
+    }
   >
     <div>
        This is a test

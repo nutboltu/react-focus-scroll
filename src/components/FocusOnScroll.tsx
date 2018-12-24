@@ -1,33 +1,21 @@
 import * as React from 'react';
-import * as classnames from 'classnames';
 import { throttle, debounce } from 'lodash';
 
 import {
   DELAY_TIME_IN_MS,
   SUPPORTED_TAGS_FOR_FOCUS,
-} from './config';
+} from '../helpers/config';
 import {
   findFocusArea,
   findFocusElement
-} from './utils';
+} from '../helpers/utils';
 
 import {
   IFocusOnScrollProps,
-  IFocusOnScrollState
-} from './FocusOnScroll.d';
+  IFocusOnScrollState,
+  ChildrenArray,
+} from '../@types';
 
-const styles = {
-  section: {
-    opacity: 0.5,
-    transition: 'opacity 0.1s ease-in-out',
-  },
-  isFocused: {
-    opacity: 1,
-  },
-  focusOnScroll: {
-    display: 'block'
-  },
-};
 class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollState> {
   private scrollElement: HTMLElement;
   public state = {
@@ -52,6 +40,13 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     }
   }
 
+  public getInlineStyles = (focused: boolean) => {
+    return {
+      opacity: focused ? 1: 0.5,
+      transition: 'opacity 0.1s ease-in-out',
+    }
+  }
+
   public componentWillUnmount() {
     window.removeEventListener('scroll', this.throttleScrollHandler);
     window.removeEventListener('resize', this.debounceResizeHandler);
@@ -61,9 +56,9 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
   private debounceResizeHandler = () => debounce(this.resizeHandler, DELAY_TIME_IN_MS);
   private throttleScrollHandler = () => throttle(this.scrollHandler, DELAY_TIME_IN_MS);
 
-  private findAndSetChildren = (callback: unknown) => {
+  private findAndSetChildren = (callback: unknown): void => {
     if (this.scrollElement && this.scrollElement.children) {
-      const childrenArray = Array.from(this.scrollElement.children);
+      const childrenArray = Array.from(this.scrollElement.children) as ChildrenArray;
       this.setState({ childrenArray }, () => {
         if (typeof callback === 'function') {
           callback();
@@ -72,7 +67,7 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     }
   }
 
-  public focusOnHandler = (index: string) => {
+  public focusOnHandler = (index: string): void => {
     const { focusArea, childrenArray } = this.state;
     const focusIndex = Number(index);
     if (isNaN(Number(index)) || focusIndex > childrenArray.length) return;
@@ -94,7 +89,7 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
    * If user clicks on an input field of a blur section
    *  this handler will automatically focus that section
    */
-  public inputClickHandler = (event: any) => {
+  public inputClickHandler = (event: any): void => {
     const tagName = event.target && event.target.tagName;
     const unsuportedTag = (!tagName || !SUPPORTED_TAGS_FOR_FOCUS.includes(tagName.toLowerCase()));
 
@@ -106,13 +101,13 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     const parentElement = childrenArray[focusIndex] as HTMLElement;
     const childElement = event.target;
     const alreadyInFocusArea = parentElement.contains(childElement);
-
+    console.log(alreadyInFocusArea);
     if (!alreadyInFocusArea) {
       childElement.scrollIntoView({ behavior: 'smooth' });
     }
   }
 
-  public resizeHandler = () => {
+  public resizeHandler = (): void => {
     const { childrenArray } = this.state;
     const focusArea = findFocusArea(childrenArray);
     this.setState({
@@ -120,7 +115,7 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     }, this.scrollHandler);
   }
 
-  public scrollHandler = () => {
+  public scrollHandler = (): void => {
     const { focusArea, childrenArray, focusOnTriggered } = this.state;
     if (focusOnTriggered) return;
     const focusIndex = findFocusElement(focusArea, childrenArray);
@@ -132,19 +127,18 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
   }
 
   public renderSections = (focusedClassName: string): React.ReactNode => {
-    const { sectionClassName, children } = this.props;
+    const {
+      children,
+    } = this.props;
 
     return React.Children.map(children, (element, index) => {
-      const isFocused = this.state.focusIndex === index;
-      const id = `s_${index}`;
+      const focused = this.state.focusIndex === index;
+      const id = `focus-on-scroll-section-${index}`;
 
       return (
         <section
           key={id}
-          className={classnames(styles.section, sectionClassName, {
-            'focused': isFocused,
-            [focusedClassName]: isFocused,
-          })}
+          style={this.getInlineStyles(focused)}
         >
           {element}
         </section>
@@ -155,7 +149,6 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
   public render(): React.ReactNode {
     const {
       focusedClassName,
-      className,
     } = this.props;
     
     return (
@@ -163,7 +156,6 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
         role="button"
         ref={this.setScrollElement}
         onClick={this.inputClickHandler}
-        className={classnames(styles.focusOnScroll, className)}
       >
         {this.renderSections(focusedClassName!)}
       </div>
