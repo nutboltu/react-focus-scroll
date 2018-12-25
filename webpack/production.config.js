@@ -14,15 +14,15 @@ module.exports = merge(getCommonConfig('production'), {
     libraryTarget: 'umd',
   },
   entry: {
-   main: path.resolve(__dirname, '../src/FocusOnScroll.tsx'),
+   main: path.resolve(__dirname, '../src/components/FocusOnScroll.tsx'),
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new UglifyJsPlugin({
-      cache: true,
-      parallel: true,
-      uglifyOptions: { ecma: 8 },
-    }),
+    // new UglifyJsPlugin({
+    //   cache: true,
+    //   parallel: true,
+    //   uglifyOptions: { ecma: 8 },
+    // }),
     new CompressionPlugin({
       test: /\.js$/,
       minRatio: 0.8,
