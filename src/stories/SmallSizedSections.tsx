@@ -12,7 +12,7 @@ stories.add('Small sized sections (with options)', () => {
   return (
     <FocusOnScroll>
       <div  style={{ height: 30, background: '#00E4E4' }}>
-        <div  color="white">0</div>
+        <div  color='white'>0</div>
       </div>
       <div  style={{ height: 50, background: '#8DE2E0' }}>
         <div >1</div>
@@ -23,13 +23,13 @@ stories.add('Small sized sections (with options)', () => {
         />
       </div>
       <div  style={{ height: 600, background: '#E40000' }}>
-        <div  color="white">2</div>
+        <div  color='white'>2</div>
       </div>
       <div  style={{ height: 200, background: '#009100' }}>
-        <div  color="white">3</div>
+        <div  color='white'>3</div>
       </div>
       <div  style={{ height: 200, background: '#ED710B' }}>
-        <div  color="white">4</div>
+        <div  color='white'>4</div>
       </div>
       <div  style={{ height: 30, background: '#F9F3E9' }}>
         <div >5</div>

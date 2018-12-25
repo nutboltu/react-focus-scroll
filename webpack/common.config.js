@@ -1,7 +1,4 @@
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const isProduction = (env) => env === 'production';
-const isDevelopment = (env) => env === 'development';
 
 const getCommonConfig = (env = 'development') => ({
   node: {
@@ -31,13 +28,6 @@ const getCommonConfig = (env = 'development') => ({
       },
     ],
   },
-  plugins: [
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
-      filename: "[name].[hash].min.css",
-    })
-  ],
 });
 
 module.exports = getCommonConfig;
