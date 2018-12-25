@@ -11,7 +11,7 @@
     "test:update:snapshot": "$(npm bin)/jest --updateSnapshot",
     "test:coverage": "$(npm bin)/jest --coverage",
     "lint": "$(npm bin)/tslint -c tslint.json 'src/**/*.ts*'",
-    "ci": "npm test && npm run lint",
+    "ci": "npm run lint && npm test",
     "prepush": "npm run ci"
   },
   "repository": {
