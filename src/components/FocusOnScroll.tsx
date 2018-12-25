@@ -56,7 +56,7 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     window.addEventListener('resize', this.debounceResizeHandler());
   }
 
-  public getDerivedStateFromProps(nextProps: IFocusOnScrollProps) {
+  public componentWillReceiveProps(nextProps: IFocusOnScrollProps) {
     if (this.props.focusOn !== nextProps.focusOn) {
       this.focusOnHandler(nextProps.focusOn!);
     }
