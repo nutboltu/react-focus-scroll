@@ -1,0 +1,35 @@
+{
+  "extends": [
+    "tslint:recommended"
+  ],
+  "rules": {
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "import-name": false,
+    "indent": [true, "spaces", 2],
+    "member-access": true,
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "private-static-field",
+          "public-static-field",
+          "private-instance-field",
+          "public-instance-field",
+          "private-constructor",
+          "public-constructor",
+          "private-instance-method",
+          "protected-instance-method",
+          "public-instance-method"
+        ]
+      }
+    ],
+    "no-empty": false,
+    "no-reference": false,
+    "no-unused-expression": false,
+    "ordered-imports": false,
+    "quotemark": [true, "single"],
+    "object-literal-sort-keys": false,
+    "variable-name": [true, "check-format"],
+    "max-line-length": [true, 120]
+  }
+}
