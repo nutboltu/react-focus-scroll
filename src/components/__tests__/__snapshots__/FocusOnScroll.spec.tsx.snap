@@ -2,11 +2,13 @@
 
 exports[`FocusOnScroll Component Suite FocusOnScroll Component should render with defaults 1`] = `
 <div
+  className=""
   onClick={[Function]}
   role="button"
 >
   <section
-    key="focus-on-scroll-section-0/.0"
+    className="focused"
+    key="rfs-section-0/.0"
     style={
       Object {
         "opacity": 1,
@@ -19,7 +21,8 @@ exports[`FocusOnScroll Component Suite FocusOnScroll Component should render wit
     </div>
   </section>
   <section
-    key="focus-on-scroll-section-1/.1"
+    className=""
+    key="rfs-section-1/.1"
     style={
       Object {
         "opacity": 0.5,
