@@ -7,7 +7,7 @@ import {
 } from '../helpers/config';
 import {
   findFocusArea,
-  findFocusElement
+  findFocusElement,
 } from '../helpers/utils';
 
 import {
@@ -28,30 +28,6 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     childrenArray: [],
   };
 
-  public componentDidMount() {
-    this.findAndSetChildren(this.resizeHandler);
-    window.addEventListener('scroll', this.throttleScrollHandler());
-    window.addEventListener('resize', this.debounceResizeHandler());
-  }
-
-  public componentWillReceiveProps(nextProps: IFocusOnScrollProps) {
-    if (this.props.focusOn !== nextProps.focusOn) {
-      this.focusOnHandler(nextProps.focusOn!);
-    }
-  }
-
-  public getInlineStyles = (focused: boolean) => {
-    return {
-      opacity: focused ? 1: 0.5,
-      transition: 'opacity 0.1s ease-in-out',
-    }
-  }
-
-  public componentWillUnmount() {
-    window.removeEventListener('scroll', this.throttleScrollHandler);
-    window.removeEventListener('resize', this.debounceResizeHandler);
-  }
-
   private setScrollElement = (element: HTMLDivElement) => (this.scrollElement = element);
   private debounceResizeHandler = () => debounce(this.resizeHandler, DELAY_TIME_IN_MS);
   private throttleScrollHandler = () => throttle(this.scrollHandler, DELAY_TIME_IN_MS);
@@ -67,10 +43,36 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     }
   }
 
+  private getInlineStyles = (focused: boolean) => {
+    return {
+      opacity: focused ? 1 : 0.5,
+      transition: 'opacity 0.1s ease-in-out',
+    };
+  }
+
+  public componentDidMount() {
+    this.findAndSetChildren(this.resizeHandler);
+    window.addEventListener('scroll', this.throttleScrollHandler());
+    window.addEventListener('resize', this.debounceResizeHandler());
+  }
+
+  public getDerivedStateFromProps(nextProps: IFocusOnScrollProps) {
+    if (this.props.focusOn !== nextProps.focusOn) {
+      this.focusOnHandler(nextProps.focusOn!);
+    }
+  }
+
+  public componentWillUnmount() {
+    window.removeEventListener('scroll', this.throttleScrollHandler);
+    window.removeEventListener('resize', this.debounceResizeHandler);
+  }
+
   public focusOnHandler = (index: string): void => {
     const { focusArea, childrenArray } = this.state;
     const focusIndex = Number(index);
-    if (isNaN(Number(index)) || focusIndex > childrenArray.length) return;
+    if (isNaN(Number(index)) || focusIndex > childrenArray.length) {
+      return ;
+    }
 
     const element = childrenArray[focusIndex] as HTMLElement;
     const scrollPosition = (element.getBoundingClientRect().top + window.pageYOffset) - focusArea.top;
@@ -101,7 +103,6 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     const parentElement = childrenArray[focusIndex] as HTMLElement;
     const childElement = event.target;
     const alreadyInFocusArea = parentElement.contains(childElement);
-    console.log(alreadyInFocusArea);
     if (!alreadyInFocusArea) {
       childElement.scrollIntoView({ behavior: 'smooth' });
     }
@@ -117,7 +118,9 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
 
   public scrollHandler = (): void => {
     const { focusArea, childrenArray, focusOnTriggered } = this.state;
-    if (focusOnTriggered) return;
+    if (focusOnTriggered) {
+      return;
+    }
     const focusIndex = findFocusElement(focusArea, childrenArray);
     if (focusIndex >= 0) {
       this.setState({
@@ -150,10 +153,10 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     const {
       focusedClassName,
     } = this.props;
-    
+
     return (
       <div
-        role="button"
+        role='button'
         ref={this.setScrollElement}
         onClick={this.inputClickHandler}
       >

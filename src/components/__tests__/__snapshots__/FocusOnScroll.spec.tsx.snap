@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<FocusOnScroll /> FocusOnScroll Component should render with defaults 1`] = `
+exports[`FocusOnScroll Component Suite FocusOnScroll Component should render with defaults 1`] = `
 <div
   onClick={[Function]}
   role="button"
