@@ -1,0 +1,13 @@
+language: node_js
+cache:
+  yarn: true
+  directories:
+    - node_modules
+notifications:
+  email: false
+node_js:
+  - node
+script:
+  - npm run ci && npm run build
+after_success:
+  - test $TRAVIS_BRANCH = "master" && npm run deploy-storybook
