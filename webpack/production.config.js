@@ -9,7 +9,7 @@ module.exports = merge(getCommonConfig('production'), {
   mode: 'production',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].min.js',
+    filename: '[name].js',
     library: 'ReactFocusOnScroll',
     libraryTarget: 'umd',
   },
@@ -23,10 +23,10 @@ module.exports = merge(getCommonConfig('production'), {
     //   parallel: true,
     //   uglifyOptions: { ecma: 8 },
     // }),
-    new CompressionPlugin({
-      test: /\.js$/,
-      minRatio: 0.8,
-    }),
+    // new CompressionPlugin({
+    //   test: /\.js$/,
+    //   minRatio: 0.8,
+    // }),
   ],
   externals: [
     'react',
