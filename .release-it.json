@@ -1,9 +1,0 @@
-{
-  "git": {
-    "tagName": "v${version}"
-  },
-  "github": {
-    "release": true,
-    "tokenRef": "8c5bdb8e0eb12225cba8edbee8d18a899c1b597b"
-  }
-}
