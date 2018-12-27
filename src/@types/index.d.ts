@@ -5,11 +5,10 @@ export interface IFocusArea {
 }
 
 export interface IFocusOnScrollProps {
-  focusedClassName?: string;
+  children: ChildrenArray;
   className?: string;
-  children?: ChildrenArray;
   focusOn?: string;
-  sectionClassName?: string;
+  onFocus?: (focusIndex: number) => void;
 }
 
 export interface IFocusOnScrollState {

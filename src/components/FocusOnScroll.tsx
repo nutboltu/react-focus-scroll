@@ -18,17 +18,22 @@ import {
 
 class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollState> {
   private scrollElement: HTMLElement;
-  public state = {
-    focusIndex: 0,
-    focusArea: {
-      top: 0,
-      bottom: 0,
-    },
-    focusOnTriggered: false,
-    childrenArray: [],
-  };
 
-  private setScrollElement = (element: HTMLDivElement) => (this.scrollElement = element);
+  constructor(props: IFocusOnScrollProps) {
+    super(props);
+    this.state = {
+      focusIndex: Number(this.props.focusOn) || 0,
+      focusArea: {
+        top: 0,
+        bottom: 0,
+      },
+      focusOnTriggered: false,
+      childrenArray: [],
+    };
+  }
+  private setScrollElement = (element: HTMLDivElement): void => {
+    this.scrollElement = element;
+  }
   private debounceResizeHandler = () => debounce(this.resizeHandler, DELAY_TIME_IN_MS);
   private throttleScrollHandler = () => throttle(this.scrollHandler, DELAY_TIME_IN_MS);
 
@@ -70,20 +75,20 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
   public focusOnHandler = (index: string): void => {
     const { focusArea, childrenArray } = this.state;
     const focusIndex = Number(index);
-    if (isNaN(Number(index)) || focusIndex > childrenArray.length) {
+    if (isNaN(focusIndex) || focusIndex > childrenArray.length) {
       return ;
     }
 
     const element = childrenArray[focusIndex] as HTMLElement;
     const scrollPosition = (element.getBoundingClientRect().top + window.pageYOffset) - focusArea.top;
     this.setState({
-      focusIndex,
       focusOnTriggered: true,
     }, () => {
       window.scrollTo(0, scrollPosition + 1);
       setTimeout(() => {
         this.setState({ focusOnTriggered: false });
       }, DELAY_TIME_IN_MS);
+      this.setFocusIndex(focusIndex);
     });
   }
 
@@ -100,11 +105,12 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     }
 
     const { childrenArray, focusIndex } = this.state;
-    const parentElement = childrenArray[focusIndex] as HTMLElement;
     const childElement = event.target;
-    const alreadyInFocusArea = parentElement.contains(childElement);
+    const targetIndex = childrenArray.findIndex((parentElement: HTMLElement) => parentElement.contains(childElement));
+    const alreadyInFocusArea = focusIndex === targetIndex;
     if (!alreadyInFocusArea) {
       childElement.scrollIntoView({ behavior: 'smooth' });
+      this.setFocusIndex(targetIndex || focusIndex);
     }
   }
 
@@ -123,25 +129,37 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     }
     const focusIndex = findFocusElement(focusArea, childrenArray);
     if (focusIndex >= 0) {
-      this.setState({
-        focusIndex,
-      });
+      this.setFocusIndex(focusIndex);
     }
   }
 
-  public renderSections = (focusedClassName: string): React.ReactNode => {
+  public setFocusIndex = (focusIndex: number): void => {
+    if (this.state.focusIndex !== focusIndex) {
+      const { onFocus } = this.props;
+      this.setState({
+        focusIndex,
+      });
+      if (typeof onFocus === 'function') {
+        onFocus(focusIndex);
+      }
+    }
+  }
+
+  public renderSections = (): React.ReactNode => {
     const {
       children,
     } = this.props;
 
     return React.Children.map(children, (element, index) => {
       const focused = this.state.focusIndex === index;
-      const id = `focus-on-scroll-section-${index}`;
+      const focusedClassName = focused ? 'focused' : '';
+      const id = `rfs-section-${index}`;
 
       return (
         <section
           key={id}
           style={this.getInlineStyles(focused)}
+          className={focusedClassName}
         >
           {element}
         </section>
@@ -150,17 +168,14 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
   }
 
   public render(): React.ReactNode {
-    const {
-      focusedClassName,
-    } = this.props;
-
     return (
       <div
+        className={this.props.className || ''}
         role='button'
         ref={this.setScrollElement}
         onClick={this.inputClickHandler}
       >
-        {this.renderSections(focusedClassName!)}
+        {this.renderSections()}
       </div>
     );
   }
