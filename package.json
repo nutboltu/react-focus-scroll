@@ -12,9 +12,9 @@
     "test:update:snapshot": "$(npm bin)/jest --updateSnapshot",
     "test:coverage": "$(npm bin)/jest --coverage",
     "lint": "$(npm bin)/tslint -c tslint.json 'src/**/*.ts*'",
-    "ci": "npm run lint && npm test",
-    "prepush": "npm run ci",
-    "semantic-release": "semantic-release"
+    "ci": "npm install && npm run prepush",
+    "prepush": "npm run lint && npm test",
+    "semantic-release": "$(npm bin)/semantic-release"
   },
   "repository": {
     "type": "git",
