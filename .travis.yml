@@ -10,4 +10,4 @@ node_js:
 script:
   - npm run ci && npm run build
 after_success:
-  - test $TRAVIS_BRANCH = "master" && npm run deploy-storybook
+  - test $TRAVIS_BRANCH = "master" && npm run deploy-storybook && npm run semantic-release

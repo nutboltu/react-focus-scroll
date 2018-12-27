@@ -1,3 +1,4 @@
 {
-  "repositoryUrl": "git@github.com:nutboltu/react-focus-scroll.git"
+  "repositoryUrl": "git@github.com:nutboltu/react-focus-scroll.git",
+  "dryRun": false
 }
