@@ -1,6 +1,6 @@
 {
   "name": "react-focus-scroll",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "A react component which focuses sections while scrolling",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
