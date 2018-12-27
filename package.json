@@ -20,9 +20,15 @@
     "url": "git+https://github.com/nutboltu/react-focus-scroll.git"
   },
   "keywords": [
-    "focus-on-scroll"
+    "react",
+    "focus",
+    "scroll",
+    "focus on scroll",
+    "focus scrolling",
+    "react focus on scroll",
+    "focus element on scrolling"
   ],
-  "author": "Farhad Yasir",
+  "author": "Farhad Yasir<farhad.yasir.nb@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nutboltu/react-focus-scroll/issues"
