@@ -8,10 +8,5 @@ node_js:
   - node
 script:
   - npm run ci && npm run build
-
-  jobs:
-  include:
-    - stage: npm release
-      if: branch = master
-      node_js: "8"
-      script: npm run semantic-release && npm run deploy-storybook
+after_success:
+  - test $TRAVIS_BRANCH = "master" && npm run deploy-storybook
