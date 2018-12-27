@@ -32,6 +32,7 @@ import FocusOnScroll from "react-focus-scroll";
   onFocus={onFocus}
   classNames="custom-class"
 />
+```
 
 ## License
 
