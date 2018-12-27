@@ -31,7 +31,10 @@ import FocusOnScroll from "react-focus-scroll";
   focusOn="1"
   onFocus={onFocus}
   classNames="custom-class"
-/>
+>
+  <div>This is first section</div>
+  <div>This is second section</div>
+</FocusOnScroll>
 ```
 
 ## License
