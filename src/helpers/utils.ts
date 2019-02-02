@@ -39,3 +39,41 @@ export const findFocusElement = (focusArea: IFocusArea, childrenArray: ChildrenA
     return isInfocusArea ? index : acc;
   }, 0);
 };
+
+export const debounce = (fn: any, wait: number) => {
+  let timeout: any;
+  const resolver = function() {
+    const context = this;
+    const args = arguments;
+    const later = () => {
+      fn.apply(context, args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+
+  };
+  return resolver;
+};
+
+export const throttle = (fn: any, wait: number) => {
+  let throttled = false;
+  // tslint:disable-next-line:one-variable-per-declaration
+  let context: any, args: any;
+  const resolver = function() {
+    if (throttled) {
+      args = arguments;
+      context = this;
+      return;
+    }
+    throttled = true;
+    fn.apply(this, arguments);
+    setTimeout(() => {
+      throttled = false;
+      if (args) {
+        resolver.apply(context, args);
+        args = context = null;
+      }
+    }, wait);
+  };
+  return resolver;
+};
