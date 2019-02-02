@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { throttle, debounce } from 'lodash';
 
 import {
   DELAY_TIME_IN_MS,
@@ -8,6 +7,8 @@ import {
 import {
   findFocusArea,
   findFocusElement,
+  throttle,
+  debounce,
 } from '../helpers/utils';
 
 import {
