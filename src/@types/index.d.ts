@@ -13,7 +13,6 @@ export interface IFocusOnScrollProps {
 
 export interface IFocusOnScrollState {
   focusIndex: number;
-  focusOnTriggered: boolean;
 }
 
 export type ChildrenArray = any[];
