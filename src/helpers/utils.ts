@@ -34,7 +34,11 @@ export const debounce = (fn: any, wait: number) => {
     };
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
-
+  };
+  resolver.cancel = function cancel() {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
   };
   return resolver;
 };
@@ -43,6 +47,8 @@ export const throttle = (fn: any, wait: number) => {
   let throttled = false;
   let context: any;
   let args: any;
+  let timeout: any;
+
   const resolver = function() {
     if (throttled) {
       args = arguments;
@@ -51,13 +57,18 @@ export const throttle = (fn: any, wait: number) => {
     }
     throttled = true;
     fn.apply(this, arguments);
-    setTimeout(() => {
+    timeout = setTimeout(() => {
       throttled = false;
       if (args) {
         resolver.apply(context, args);
         args = context = null;
       }
     }, wait);
+  };
+  resolver.cancel = function cancel() {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
   };
   return resolver;
 };
