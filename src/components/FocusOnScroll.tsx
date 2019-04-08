@@ -6,6 +6,7 @@ import {
 } from '../helpers/config';
 import {
   findFocusElement,
+  getClosest,
   getFocusIndex,
   throttle,
   debounce,
@@ -81,7 +82,7 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
 
     const { focusIndex } = this.state;
     const childElement = event.target;
-    const selectedSection = childElement.closest('section');
+    const selectedSection = getClosest(childElement, 'section');
 
     const alreadyInFocusArea = focusIndex === selectedSection.id;
     if (!alreadyInFocusArea) {

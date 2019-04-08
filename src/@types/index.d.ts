@@ -16,3 +16,9 @@ export interface IFocusOnScrollState {
 }
 
 export type ChildrenArray = any[];
+
+declare global {
+  interface Element {
+    msMatchesSelector(selectors: string): boolean;
+  }
+}

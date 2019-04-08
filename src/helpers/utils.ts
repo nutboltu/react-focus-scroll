@@ -82,3 +82,21 @@ export const getFocusIndex = (index: string | number | undefined): string => {
   const focusIndex = `${ID_PREFIX}${id}`;
   return focusIndex;
 };
+
+export const getClosest = (element: any, selector: any) => {
+  if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+  }
+
+  if (!document.documentElement.contains(element)) {
+    return null;
+  }
+  let ancestor = element;
+  do {
+    if (ancestor.matches(selector)) {
+      return ancestor;
+    }
+    ancestor = ancestor.parentElement;
+  } while (ancestor !== null);
+  return null;
+};

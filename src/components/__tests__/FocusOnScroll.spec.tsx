@@ -1,10 +1,11 @@
 import * as React from 'react';
 
 import { shallow } from 'enzyme';
-import { spy } from 'sinon';
+import { stub, SinonStub } from 'sinon';
 import FocusOnScroll from '../FocusOnScroll';
+import * as utils from '../../helpers/utils';
 
-describe('FocusOnScroll Component Suite', () => {
+describe.only('FocusOnScroll Component Suite', () => {
   const getComponent = () => shallow(<FocusOnScroll >
     <div> This is a test</div>
     <div> This is a test</div>
@@ -22,84 +23,64 @@ describe('FocusOnScroll Component Suite', () => {
   });
 
   describe('inputClickHandler', () => {
-    it('should call scrollIntoView for clicked element', () => {
+    let getClosestStub: SinonStub;
+    beforeEach(() => {
+      getClosestStub = stub(utils, 'getClosest');
+    });
+    afterEach(() => {
+      getClosestStub.restore();
+    });
+
+    it('should call focusOnHandler for clicked element', () => {
       const component = getComponent();
       component.setState({
-        focusIndex: 0,
-        childrenArray: [{
-          offsetTop: 0,
-          clientHeight: 100,
-          contains: () => false,
-        }, {
-          offsetTop: 101,
-          clientHeight: 100,
-          contains: () => true,
-        }],
+        focusIndex: 'rfs-scetion-0',
       });
       const instance = component.instance() as any;
-      const mockScrollIntoView = spy();
+      getClosestStub.returns({
+        id: 'rfs-scetion-1',
+      });
       const event = {
         target: {
           getBoundingClientRect: () => ({ top: 102 }),
           tagName: 'INPUT',
-          scrollIntoView: mockScrollIntoView,
         },
       };
 
       instance.inputClickHandler(event);
-      expect(mockScrollIntoView.calledOnce).toBeTruthy;
+      expect(instance.focusOnHandler.calledOnce).toBeTruthy;
     });
-    it('shouldn\'t call scrollIntoView if clicks on DIV element', () => {
+    it('shouldn\'t call focusOnHandler if clicks on DIV element', () => {
       const component = getComponent();
-      const mockScrollIntoView = spy();
       component.setState({
-        focusIndex: 0,
-        childrenArray: [{
-          offsetTop: 0,
-          clientHeight: 100,
-        }, {
-          offsetTop: 101,
-          clientHeight: 100,
-        }],
+        focusIndex: 'rfs-section-0',
       });
       const instance = component.instance() as any;
       const event = {
         target: {
           getBoundingClientRect: () => ({ top: 102 }),
           tagName: 'DIV',
-          scrollIntoView: mockScrollIntoView,
         },
       };
 
       instance.inputClickHandler(event);
-      expect(mockScrollIntoView.calledOnce).toBeFalsy;
+      expect(instance.focusOnHandler.calledOnce).toBeFalsy;
     });
-    it('shouldn\'t call scrollIntoView if child is already in focused area', () => {
+    it('shouldn\'t call focusOnHandler if child is already in focused area', () => {
       const component = getComponent();
       component.setState({
-        focusIndex: 1,
-        childrenArray: [{
-          offsetTop: 0,
-          clientHeight: 100,
-          contains: () => false,
-        }, {
-          offsetTop: 101,
-          clientHeight: 100,
-          contains: () => true,
-        }],
+        focusIndex: 'rfs-section-1',
       });
       const instance = component.instance() as any;
-      const mockScrollIntoView = spy();
       const event = {
         target: {
           getBoundingClientRect: () => ({ top: 10 }),
           tagName: 'DIV',
-          scrollIntoView: mockScrollIntoView,
         },
       };
 
       instance.inputClickHandler(event);
-      expect(mockScrollIntoView.calledOnce).toBeFalsy;
+      expect(instance.focusOnHandler.calledOnce).toBeFalsy;
     });
   });
 });
