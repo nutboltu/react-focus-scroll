@@ -51,8 +51,8 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
   }
 
   public componentWillUnmount() {
-    window.removeEventListener('scroll', this.throttleScrollHandler);
-    window.removeEventListener('resize', this.debounceResizeHandler);
+    window.removeEventListener('scroll', this.throttleScrollHandlerRef);
+    window.removeEventListener('resize', this.debounceResizeHandlerRef);
     this.debounceResizeHandlerRef.cancel();
     this.throttleScrollHandlerRef.cancel();
   }
@@ -63,7 +63,7 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
       return;
     }
     const { height } = focusElement.getBoundingClientRect();
-    const scrollPosition = focusElement.offsetTop + height / 2 - window.innerHeight / 2;
+    const scrollPosition = (focusElement.offsetTop + (height / 2)) - (window.innerHeight / 2);
     window.scrollTo(0, scrollPosition - 1);
     this.setFocusIndex(focusIndex);
   }
