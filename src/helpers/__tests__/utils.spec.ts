@@ -6,8 +6,8 @@ import {
 describe('Utils suite', () => {
   // describe.skip('findFocusElement', () => {
   //   beforeEach(() => {
-  //     const element 
-  //     const fragment = 
+  //     const element
+  //     const fragment =
   //   });
   //   afterEach(() => {
 

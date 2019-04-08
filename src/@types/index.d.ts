@@ -18,6 +18,7 @@ export interface IFocusOnScrollState {
 export type ChildrenArray = any[];
 
 declare global {
+  // tslint:disable-next-line
   interface Element {
     msMatchesSelector(selectors: string): boolean;
   }
