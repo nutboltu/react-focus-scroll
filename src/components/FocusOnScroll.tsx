@@ -6,6 +6,7 @@ import {
 } from '../helpers/config';
 import {
   findFocusElement,
+  getFocusIndex,
   throttle,
   debounce,
 } from '../helpers/utils';
@@ -22,7 +23,7 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
   constructor(props: IFocusOnScrollProps) {
     super(props);
     this.state = {
-      focusIndex: Number(this.props.focusOn) || 0,
+      focusIndex: getFocusIndex(this.props.focusOn),
     };
   }
   private debounceResizeHandler = () => debounce(this.scrollHandler, DELAY_TIME_IN_MS);
@@ -44,27 +45,25 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
 
   public componentDidUpdate(prevProps: IFocusOnScrollProps) {
     if (this.props.focusOn !== prevProps.focusOn) {
-      this.focusOnHandler(prevProps.focusOn!);
+      this.focusOnHandler(getFocusIndex(prevProps.focusOn));
     }
   }
 
   public componentWillUnmount() {
-    console.log('will unmout');
     window.removeEventListener('scroll', this.throttleScrollHandler);
     window.removeEventListener('resize', this.debounceResizeHandler);
     this.debounceResizeHandlerRef.cancel();
     this.throttleScrollHandlerRef.cancel();
   }
 
-  public focusOnHandler = (index: string): void => {
-    const sections = Array.prototype.slice.call(document.getElementsByClassName('rfs-section'));
-    const focusIndex = Number(index);
-    if (isNaN(focusIndex) || focusIndex >= sections.length) {
-      return ;
+  public focusOnHandler = (focusIndex: string): void => {
+    const focusElement = document.getElementById(focusIndex);
+    if (!focusElement) {
+      return;
     }
-    const { height } = sections[focusIndex].getBoundingClientRect();
-    const scrollPosition = (sections[focusIndex] as any).offsetTop + height / 2 - window.innerHeight / 2;
-    window.scrollTo(0, scrollPosition + 1);
+    const { height } = focusElement.getBoundingClientRect();
+    const scrollPosition = focusElement.offsetTop + height / 2 - window.innerHeight / 2;
+    window.scrollTo(0, scrollPosition - 1);
     this.setFocusIndex(focusIndex);
   }
 
@@ -83,27 +82,26 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     const { focusIndex } = this.state;
     const childElement = event.target;
     const selectedSection = childElement.closest('section');
-    const str = selectedSection.id.split('-');
-    const id = str[str.length - 1];
-    const alreadyInFocusArea = focusIndex === id;
+
+    const alreadyInFocusArea = focusIndex === selectedSection.id;
     if (!alreadyInFocusArea) {
-      this.focusOnHandler(id);
+      this.focusOnHandler(selectedSection.id);
     }
   }
 
   public scrollHandler = (): void => {
     const focusIndex = findFocusElement();
-    if (focusIndex >= 0) {
+    if (focusIndex) {
       this.setFocusIndex(focusIndex);
     }
   }
 
-  public setFocusIndex = (focusIndex: number): void => {
+  public setFocusIndex = (focusIndex: string): void => {
     if (this.state.focusIndex !== focusIndex) {
       const { onFocus } = this.props;
       this.setState({ focusIndex });
       if (typeof onFocus === 'function') {
-        onFocus(focusIndex);
+        onFocus();
       }
     }
   }
@@ -112,9 +110,9 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     const { children } = this.props;
 
     return React.Children.map(children, (element, index) => {
-      const focused = this.state.focusIndex === index;
+      const id = getFocusIndex(index);
+      const focused = this.state.focusIndex === id;
       const focusedClassName = focused ? 'focused' : '';
-      const id = `rfs-section-${index}`;
 
       return (
         <section
