@@ -1,38 +1,38 @@
 import {
-  // findFocusElement,
+  findFocusElement,
   getFocusIndex,
 } from '../utils';
 
 describe('Utils suite', () => {
-  // describe.skip('findFocusElement', () => {
-  //   beforeEach(() => {
-  //     const element
-  //     const fragment =
-  //   });
-  //   afterEach(() => {
-
-  //   });
-
-  //   it('empty children array should return -1', () => {
-  //       const result = findFocusElement();
-  //       expect(result).toEqual(-1);
-  //   });
-    // it('if window.scrollY is zero should return 0', () => {
-    //   const result = findFocusElement();
-    //   expect(result).toEqual(0);
-    // });
-    // it('if window.scrollY is greater than equal windowHeight should return last element index', () => {
-    //   Object.defineProperty(window, 'scrollY', { value: 1 });
-    //   const result = findFocusElement();
-    //   expect(result).toEqual(mockChildrenArray.length - 1);
-    // });
-
-    // it('should return proper focused index', () => {
-    //   Object.defineProperty(window, 'scrollY', { value: 100 });
-    //   const result = findFocusElement();
-    //   expect(result).toEqual(mockChildrenArray.length - 1);
-    // });
-  // });
+  describe('findFocusElement', () => {
+    it('should return empty string if no section presents', () => {
+      const result = findFocusElement();
+      expect(result).toEqual('');
+    });
+    describe('With Dom Element', () => {
+      let element: any;
+      beforeEach(() => {
+        element = document.createElement('div');
+        element.innerHTML = `
+          <section class="rfs-section" id="rfs-section=0"> This is first section </section>
+          <section class="rfs-section" id="rfs-section=1"> This is second section </section>
+        `;
+        document.body.appendChild(element);
+      });
+      afterEach(() => {
+        document.body.removeChild(element);
+      });
+      it('if window.scrollY is zero should return rfs-section-0', () => {
+        const result = findFocusElement();
+        expect(result).toEqual('rfs-section-0');
+      });
+      it('if window.scrollY > totalHeight should return rfs-section-1', () => {
+        Object.defineProperty(window, 'scrollY', { value: 1 });
+        const result = findFocusElement();
+        expect(result).toEqual('rfs-section-1');
+      });
+    });
+  });
 
   describe('getFocusIndex', () => {
     it('should return rfs-section-0 if no id provides', () => {

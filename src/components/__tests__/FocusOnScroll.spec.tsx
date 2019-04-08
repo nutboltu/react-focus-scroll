@@ -34,15 +34,14 @@ describe.only('FocusOnScroll Component Suite', () => {
     it('should call focusOnHandler for clicked element', () => {
       const component = getComponent();
       component.setState({
-        focusIndex: 'rfs-scetion-0',
+        focusIndex: 'rfs-section-0',
       });
       const instance = component.instance() as any;
       getClosestStub.returns({
-        id: 'rfs-scetion-1',
+        id: 'rfs-section-1',
       });
       const event = {
         target: {
-          getBoundingClientRect: () => ({ top: 102 }),
           tagName: 'INPUT',
         },
       };
@@ -58,7 +57,6 @@ describe.only('FocusOnScroll Component Suite', () => {
       const instance = component.instance() as any;
       const event = {
         target: {
-          getBoundingClientRect: () => ({ top: 102 }),
           tagName: 'DIV',
         },
       };
@@ -74,7 +72,6 @@ describe.only('FocusOnScroll Component Suite', () => {
       const instance = component.instance() as any;
       const event = {
         target: {
-          getBoundingClientRect: () => ({ top: 10 }),
           tagName: 'DIV',
         },
       };
