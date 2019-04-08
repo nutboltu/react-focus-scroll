@@ -4,10 +4,10 @@ exports[`FocusOnScroll Component Suite FocusOnScroll Component should render wit
 <div
   className=""
   onClick={[Function]}
-  role="button"
 >
   <section
-    className="focused"
+    className="rfs-section focused"
+    id="rfs-section-0"
     key="rfs-section-0/.0"
     style={
       Object {
@@ -21,7 +21,8 @@ exports[`FocusOnScroll Component Suite FocusOnScroll Component should render wit
     </div>
   </section>
   <section
-    className=""
+    className="rfs-section "
+    id="rfs-section-1"
     key="rfs-section-1/.1"
     style={
       Object {
