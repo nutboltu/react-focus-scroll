@@ -8,11 +8,11 @@ export interface IFocusOnScrollProps {
   children: ChildrenArray;
   className?: string;
   focusOn?: string;
-  onFocus?: (focusIndex: number) => void;
+  onFocus?: () => void;
 }
 
 export interface IFocusOnScrollState {
-  focusIndex: number;
+  focusIndex: string;
 }
 
 export type ChildrenArray = any[];
