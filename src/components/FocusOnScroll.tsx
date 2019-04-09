@@ -25,6 +25,11 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     super(props);
     this.state = {
       focusIndex: getFocusIndex(this.props.focusOn),
+      /** focusOnTriggered: This field prevents scroll event listener to execute
+       * when user specified focused index. It means in focusOnHandler
+       * when we call window.scrollY() function it prevents triggering scroll event
+       **/
+      focusOnTriggered: false,
     };
   }
   private debounceResizeHandler = () => debounce(this.scrollHandler, DELAY_TIME_IN_MS);
@@ -63,9 +68,21 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
       return;
     }
     const { height } = focusElement.getBoundingClientRect();
-    const scrollPosition = (focusElement.offsetTop + (height / 2)) - (window.innerHeight / 2);
-    window.scrollTo(0, scrollPosition - 1);
-    this.setFocusIndex(focusIndex);
+    const scrollPosition = Math.max((focusElement.offsetTop + (height / 2)) - (window.innerHeight / 2), 1);
+
+    this.setState({
+      focusOnTriggered: true,
+    }, () => {
+      window.scrollTo({
+        top: scrollPosition - 1,
+        left: 0,
+        behavior: 'smooth',
+      });
+      this.setFocusIndex(focusIndex);
+      setTimeout(() => {
+        this.setState({ focusOnTriggered: false });
+      }, DELAY_TIME_IN_MS);
+    });
   }
 
   /**
@@ -91,6 +108,9 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
   }
 
   public scrollHandler = (): void => {
+    if (this.state.focusOnTriggered) {
+      return;
+    }
     const focusIndex = findFocusElement();
     if (focusIndex) {
       this.setFocusIndex(focusIndex);
