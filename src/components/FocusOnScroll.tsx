@@ -25,10 +25,11 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
     super(props);
     this.state = {
       focusIndex: getFocusIndex(this.props.focusOn),
-      /** focusOnTriggered: This field prevents scroll event listener to execute
+      /*
+       * focusOnTriggered: This field prevents scroll event listener to execute
        * when user specified focused index. It means in focusOnHandler
        * when we call window.scrollY() function it prevents triggering scroll event
-       **/
+       */
       focusOnTriggered: false,
     };
   }
@@ -103,7 +104,14 @@ class FocusOnScroll extends React.Component<IFocusOnScrollProps, IFocusOnScrollS
 
     const alreadyInFocusArea = focusIndex === selectedSection.id;
     if (!alreadyInFocusArea) {
-      this.focusOnHandler(selectedSection.id);
+       /*
+       * We add this set timeout because on click may modify
+       * the dom element size. So we add a delay to update the
+       * focus section
+       */
+      setTimeout(() => {
+        this.focusOnHandler(selectedSection.id);
+      }, DELAY_TIME_IN_MS);
     }
   }
 
